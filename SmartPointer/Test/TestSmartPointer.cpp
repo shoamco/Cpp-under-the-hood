@@ -3,3 +3,12 @@
 //
 
 #include "TestSmartPointer.h"
+void testControlBlock(){
+std::cout<<"\n\n\n**************  testControlBlock *******\n";
+ControlBlock controlBlock();
+std::cout<<controlBlock;
+}
+
+void testSmartPointer(){
+     testControlBlock();
+}

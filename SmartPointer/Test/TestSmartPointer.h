@@ -5,10 +5,9 @@
 #ifndef CPP_UNDER_THE_HOOD_TESTSMARTPOINTER_H
 #define CPP_UNDER_THE_HOOD_TESTSMARTPOINTER_H
 
-
-class TestSmartPointer {
-
-};
-
+#include <gtest/gtest.h>
+#include <iostream>
+#include "../ControlBlock.h"
+void testSmartPointer();
 
 #endif //CPP_UNDER_THE_HOOD_TESTSMARTPOINTER_H
