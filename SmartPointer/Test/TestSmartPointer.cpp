@@ -3,12 +3,26 @@
 //
 
 #include "TestSmartPointer.h"
+#include "SharedPointer.h"
 void testControlBlock(){
 std::cout<<"\n\n\n**************  testControlBlock *******\n";
-ControlBlock controlBlock();
-std::cout<<controlBlock;
+    ReferenceCounter referenceCounter();
+std::cout<<referenceCounter;
 }
 
+void testCtorSmartPtr(){
+    std::cout<<"\n\n\n**************  testCtorSmartPtr *******\n";
+
+    SharedPointer<int> sharedPointer1(new int(5));
+    std::cout<<"sharedPointer1 "<<sharedPointer1.get()<<std::endl;
+    SharedPointer<int> sharedPointer2=sharedPointer1;
+    std::cout<<"sharedPointer2 "<<sharedPointer2.get()<<std::endl;
+    *sharedPointer2=10;
+    std::cout<<"after set sharedPointer1 "<<sharedPointer1.get()<<std::endl;
+
+
+}
 void testSmartPointer(){
      testControlBlock();
+    testCtorSmartPtr();
 }
