@@ -9,43 +9,62 @@
 A std::shared_ptr is a container for raw pointers. It is a reference counting ownership model
  it maintains the reference count of its contained pointer in cooperation with all copies of the std::shared_ptr.
  So, the counter is incremented each time a new pointer points to the resource and decremented when destructor of the object is called**/
-template <typename T>
-class SharedPointer{
+
+
+#include "ReferenceCounter.h"
+
+template<typename T>
+class SharedPointer {
 public:
     // explicit constructor -not allow implicit
-    explicit SharedPointer(T *ptr= nullptr);
+    explicit SharedPointer(T *ptr = nullptr);
+
     ~SharedPointer();
+
     T &operator*();
 
 
     T *operator->();
+
     T get();
+
 private:
     T *rowPtr;
     ReferenceCounter *referenceCounter;
 
 };
-inline SharedPointer::SharedPointer(){
-    if(rowPtr){
+
+template<typename T>
+inline SharedPointer<T>::SharedPointer(T *ptr):rowPtr(ptr),referenceCounter(new ReferenceCounter()) {
+
+    if (rowPtr) {
         ++referenceCounter;
     }
-}
-inline SharedPointer::~SharedPointer(){
-    if(referenceCounterl.get_counter()==0){
-       delete(rowPtr);
-    }
-    else:
-       --referenceCounter;
+    std::cout<<"in ctor "<<*referenceCounter;
 
 }
 
-inline T SharedPointer<T>::get(){
+template<typename T>
+inline SharedPointer<T>::~SharedPointer() {
+    if (referenceCounter->get_counter() == 0) {
+        delete (rowPtr);
+    } else
+        --referenceCounter;
+
+}
+
+template<typename T>
+inline T SharedPointer<T>::get() {
     return *rowPtr;
 }
-inline  T &SharedPointer::operator*(){
+
+template<typename T>
+inline T &SharedPointer<T>::operator*() {
     return *rowPtr;
 }
-inline T *SharedPtr<T>::operator->() {
+
+template<typename T>
+inline T *SharedPointer<T>::operator->() {
     /**
       Overloding arrow operator so that members of T can be accessed
     like a pointer (useful if T represents a class or struct or union type)
@@ -55,29 +74,35 @@ inline T *SharedPtr<T>::operator->() {
 
 
 /**   Comparison operator    */
+
+
+
+//inline SharedPointer<T>::operator bool() {
+//    return rowPtr;
+//}
 template<typename T>
 inline bool operator==(T &ptr1, T &ptr2) {
-    return ptr1 == ptr2;
+    return ptr1.get() == ptr2.get();
 }
 
 template<typename T>
 inline bool operator>=(T &ptr1, T &ptr2) {
-    return ptr1 >= ptr2;
+    return ptr1.get() >= ptr2.get();
 }
 
 template<typename T>
 inline bool operator>(T &ptr1, T &ptr2) {
-    return ptr1 > ptr2;
+    return ptr1.get() > ptr2.get();
 }
 
 template<typename T>
 inline bool operator<=(T &ptr1, T &ptr2) {
-    return ptr1 <= ptr2;
+    return ptr1.get() <= ptr2.get();
 }
 
 template<typename T>
 inline bool operator<(T &ptr1, T &ptr2) {
-    return ptr1 < ptr2;
+    return ptr1.get() < ptr2.get();
 }
 
 #endif //CPP_UNDER_THE_HOOD_SHAREDPOINTER_H
