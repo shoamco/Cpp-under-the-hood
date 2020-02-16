@@ -52,4 +52,32 @@ inline T *SharedPtr<T>::operator->() {
      */
     return rowPtr;
 }
+
+
+/**   Comparison operator    */
+template<typename T>
+inline bool operator==(T &ptr1, T &ptr2) {
+    return ptr1 == ptr2;
+}
+
+template<typename T>
+inline bool operator>=(T &ptr1, T &ptr2) {
+    return ptr1 >= ptr2;
+}
+
+template<typename T>
+inline bool operator>(T &ptr1, T &ptr2) {
+    return ptr1 > ptr2;
+}
+
+template<typename T>
+inline bool operator<=(T &ptr1, T &ptr2) {
+    return ptr1 <= ptr2;
+}
+
+template<typename T>
+inline bool operator<(T &ptr1, T &ptr2) {
+    return ptr1 < ptr2;
+}
+
 #endif //CPP_UNDER_THE_HOOD_SHAREDPOINTER_H
