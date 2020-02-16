@@ -31,8 +31,9 @@ public:
 
     T get();
 
-    template<typename U>
-    SharedPointer<T> &operator=(const SharedPointer<U> &other);//assignment operator
+//    template<typename U>
+//    SharedPointer<T> &operator=(const SharedPointer<U> &other);//assignment operator
+    SharedPointer<T> &operator=(const SharedPointer<T> &other);//assignment operator
 
     template<typename U>
     //friend class- to allow polymorphism
@@ -64,21 +65,27 @@ inline SharedPointer<T>::SharedPointer(SharedPointer<T> &sp):rowPtr(sp.rowPtr), 
 
 
 template<typename T>
-template<typename U>
-SharedPointer<T> &SharedPointer<T>::operator=(const SharedPointer<U> &other) {
-    if (this != other) {
+//template<typename U>
+//SharedPointer<T> &SharedPointer<T>::operator=(const SharedPointer<U> &other) {
+SharedPointer<T> &SharedPointer<T>::operator=(const SharedPointer<T> &other) {
+    if (this->rowPtr != other.rowPtr) {
         --(*referenceCounter);
+        if (referenceCounter->get_counter() == 0) {
+            delete (rowPtr);
+            std::cout << "delete SharedPtr  \n";
+        }
         rowPtr = other.rowPtr;
         referenceCounter = other.referenceCounter;
         ++(*referenceCounter);
+        std::cout<<"in assignment operator referenceCounter "<<*referenceCounter<<std::endl;
     }
-    return *other;
+    return *this;
 }
 
 template<typename T>
 inline SharedPointer<T>::~SharedPointer() {
     std::cout << "in dtor referenceCounter " << *referenceCounter << std::endl;
-    --(*referenceCounter);;
+    --(*referenceCounter);
     if (referenceCounter->get_counter() == 0) {
         delete (rowPtr);
         std::cout << "delete SharedPtr  \n";
