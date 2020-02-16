@@ -30,9 +30,11 @@ public:
     T *operator->();
 
     T get();
+
     void reset();// replaces the managed object
     void swap();//swaps the managed objects
     size_t use_count();//returns the number of shared_ptr objects referring to the same managed object
+    bool unique();//(until C++20) checks whether the managed object is managed only by the current shared_ptr instance
 
     //    template<typename U>
 //    SharedPointer<T> &operator=(const SharedPointer<U> &other);//assignment operator
@@ -80,15 +82,23 @@ SharedPointer<T> &SharedPointer<T>::operator=(const SharedPointer<T> &other) {
         rowPtr = other.rowPtr;
         referenceCounter = other.referenceCounter;
         ++(*referenceCounter);
-        std::cout<<"in assignment operator referenceCounter "<<*referenceCounter<<std::endl;
+        std::cout << "in assignment operator referenceCounter " << *referenceCounter << std::endl;
     }
     return *this;
 }
 
 template<typename T>
-inline size_t SharedPointer<T>::use_count(){
+bool SharedPointer<T>::unique() {
+//Checks if *this is the only shared_ptr instance managing the current object, i.e. whether use_count() == 1.
+
+    return (1 == use_count())?true:false;
+}
+
+template<typename T>
+inline size_t SharedPointer<T>::use_count() {
     return referenceCounter->get_counter();
 }
+
 template<typename T>
 inline SharedPointer<T>::~SharedPointer() {
     std::cout << "in dtor referenceCounter " << *referenceCounter << std::endl;
