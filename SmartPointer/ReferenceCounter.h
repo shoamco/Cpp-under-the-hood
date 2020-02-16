@@ -26,7 +26,7 @@ public:
     void operator--();
     void operator--(int );
     // Overloading << operator
-    friend ostream& operator<<(ostream& os, const Counter& counter);
+    friend std::ostream& operator<<(std::ostream& os, const ControlBlock& counter);
 private:
     size_t m_counter;
 };
@@ -35,29 +35,29 @@ inline  size_t ControlBlock::get_counter(){
     return m_counter;
 }
 // Overload post/pre increment
-void ControlBlock::operator++()
+inline void ControlBlock::operator++()
 {
     m_counter++;
 }
 
-void ControlBlock::operator++(int)
+inline void ControlBlock::operator++(int)
 {
     m_counter++;
 }
 
 // Overload post/pre decrement
-void ControlBlock::operator--()
+inline void ControlBlock::operator--()
 {
     m_counter--;
 }
-void ControlBlock::operator--(int)
+inline void ControlBlock::operator--(int)
 {
     m_counter--;
 }
 // Overloading << operator
- ostream& operator<<(ostream& os, const Counter& counter)
+inline std::ostream& operator<<(std::ostream& os, const ControlBlock& counter)
 {
     os << "Counter Value : "
-       << counter.m_counter << endl;
+       << counter.m_counter << std::endl;
 }
 #endif //CPP_UNDER_THE_HOOD_CONTROLBLOCK_H

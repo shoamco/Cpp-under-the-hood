@@ -14,9 +14,42 @@ class SharedPointer{
 public:
     // explicit constructor -not allow implicit
     explicit SharedPointer(T *ptr= nullptr);
+    ~SharedPointer();
+    T &operator*();
 
+
+    T *operator->();
+    T get();
 private:
     T *rowPtr;
+    ReferenceCounter *referenceCounter;
 
 };
+inline SharedPointer::SharedPointer(){
+    if(rowPtr){
+        ++referenceCounter;
+    }
+}
+inline SharedPointer::~SharedPointer(){
+    if(referenceCounterl.get_counter()==0){
+       delete(rowPtr);
+    }
+    else:
+       --referenceCounter;
+
+}
+
+inline T SharedPointer<T>::get(){
+    return *rowPtr;
+}
+inline  T &SharedPointer::operator*(){
+    return *rowPtr;
+}
+inline T *SharedPtr<T>::operator->() {
+    /**
+      Overloding arrow operator so that members of T can be accessed
+    like a pointer (useful if T represents a class or struct or union type)
+     */
+    return rowPtr;
+}
 #endif //CPP_UNDER_THE_HOOD_SHAREDPOINTER_H
