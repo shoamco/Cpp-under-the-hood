@@ -29,10 +29,10 @@ public:
 
     T *operator->();
 
-    T get();
+    T get() const;
 
-    void reset();// replaces the managed object
-    void swap();//swaps the managed objects
+    void reset(T *ptr);// replaces the managed object
+    void swap(const SharedPointer<T> &sPtr);//swaps the managed objects
     size_t use_count();//returns the number of shared_ptr objects referring to the same managed object
     bool unique();//(until C++20) checks whether the managed object is managed only by the current shared_ptr instance
 
@@ -74,24 +74,40 @@ template<typename T>
 //SharedPointer<T> &SharedPointer<T>::operator=(const SharedPointer<U> &other) {
 SharedPointer<T> &SharedPointer<T>::operator=(const SharedPointer<T> &other) {
     if (this->rowPtr != other.rowPtr) {
-        --(*referenceCounter);
-        if (referenceCounter->get_counter() == 0) {
-            delete (rowPtr);
-            std::cout << "delete SharedPtr  \n";
-        }
-        rowPtr = other.rowPtr;
-        referenceCounter = other.referenceCounter;
-        ++(*referenceCounter);
+        this->swap(other);
         std::cout << "in assignment operator referenceCounter " << *referenceCounter << std::endl;
     }
     return *this;
 }
 
 template<typename T>
+void SharedPointer<T>::swap( const SharedPointer<T> &sPtr)//swaps the managed objects
+{
+    if (this->rowPtr != sPtr.rowPtr) {
+        --(*referenceCounter);
+        if (referenceCounter->get_counter() == 0) {
+            delete (rowPtr);
+            std::cout << "delete SharedPtr  \n";
+        }
+        rowPtr = sPtr.rowPtr;
+        referenceCounter = sPtr.referenceCounter;
+        ++(*referenceCounter);
+        std::cout << "in swap referenceCounter " << *referenceCounter << std::endl;
+    }
+}
+
+template<typename T>
+
+void SharedPointer<T>::reset(T *ptr)// replaces the managed object
+{
+
+}
+
+template<typename T>
 bool SharedPointer<T>::unique() {
 //Checks if *this is the only shared_ptr instance managing the current object, i.e. whether use_count() == 1.
 
-    return (1 == use_count())?true:false;
+    return (1 == use_count()) ? true : false;
 }
 
 template<typename T>
@@ -112,7 +128,7 @@ inline SharedPointer<T>::~SharedPointer() {
 }
 
 template<typename T>
-inline T SharedPointer<T>::get() {
+inline T SharedPointer<T>::get() const {
     return *rowPtr;
 }
 
