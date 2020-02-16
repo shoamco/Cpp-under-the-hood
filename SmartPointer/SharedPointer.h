@@ -30,8 +30,11 @@ public:
     T *operator->();
 
     T get();
+    void reset();// replaces the managed object
+    void swap();//swaps the managed objects
+    size_t use_count();//returns the number of shared_ptr objects referring to the same managed object
 
-//    template<typename U>
+    //    template<typename U>
 //    SharedPointer<T> &operator=(const SharedPointer<U> &other);//assignment operator
     SharedPointer<T> &operator=(const SharedPointer<T> &other);//assignment operator
 
@@ -82,6 +85,10 @@ SharedPointer<T> &SharedPointer<T>::operator=(const SharedPointer<T> &other) {
     return *this;
 }
 
+template<typename T>
+inline size_t SharedPointer<T>::use_count(){
+    return referenceCounter->get_counter();
+}
 template<typename T>
 inline SharedPointer<T>::~SharedPointer() {
     std::cout << "in dtor referenceCounter " << *referenceCounter << std::endl;

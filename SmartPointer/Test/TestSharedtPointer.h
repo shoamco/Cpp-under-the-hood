@@ -7,7 +7,7 @@
 
 #include <gtest/gtest.h>
 #include <iostream>
-#include "../ControlBlock.h"
+#include "../ReferenceCounter.h"
 void testSmartPointer();
 
 #endif //CPP_UNDER_THE_HOOD_TESTSMARTPOINTER_H

@@ -1,0 +1,8 @@
+//
+// Created by shoam on 2/16/20.
+//
+
+#ifndef SMARTPOINTER_UNIQUE_PTR_H
+#define SMARTPOINTER_UNIQUE_PTR_H
+
+#endif //SMARTPOINTER_UNIQUE_PTR_H
