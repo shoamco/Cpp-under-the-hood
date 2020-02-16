@@ -18,7 +18,8 @@ class SharedPointer {
 public:
     // explicit constructor -not allow implicit
     explicit SharedPointer(T *ptr = nullptr);
-
+    // Copy constructor
+    SharedPointer(SharedPointer<T>& sp);
     ~SharedPointer();
 
     T &operator*();
@@ -38,18 +39,27 @@ template<typename T>
 inline SharedPointer<T>::SharedPointer(T *ptr):rowPtr(ptr),referenceCounter(new ReferenceCounter()) {
 
     if (rowPtr) {
-        ++referenceCounter;
+        ++(*referenceCounter);
     }
     std::cout<<"in ctor "<<*referenceCounter;
 
 }
+// Copy constructor
+template<typename T>
+inline SharedPointer<T>::SharedPointer(SharedPointer<T>& sp):rowPtr(sp.rowPtr),referenceCounter(sp.referenceCounter){
+    ++(*referenceCounter);
+    std::cout<<"in copy ctor "<<*referenceCounter;
+}
 
 template<typename T>
 inline SharedPointer<T>::~SharedPointer() {
+    std::cout<<"in dtor referenceCounter "<<*referenceCounter<<std::endl;
+    --(*referenceCounter);;
     if (referenceCounter->get_counter() == 0) {
         delete (rowPtr);
-    } else
-        --referenceCounter;
+        std::cout<<"delete SharedPtr  \n";
+    }
+
 
 }
 
