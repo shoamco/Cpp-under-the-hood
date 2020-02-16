@@ -16,10 +16,12 @@ A std::shared_ptr is a container for raw pointers. It is a reference counting ow
 template<typename T>
 class SharedPointer {
 public:
-    // explicit constructor -not allow implicit
+    // explicit constructor -not allow implicit to  Prevent unwanted pointer copying so we can manage memory correctly
     explicit SharedPointer(T *ptr = nullptr);
+
     // Copy constructor
-    SharedPointer(SharedPointer<T>& sp);
+    SharedPointer(SharedPointer<T> &sp);
+
     ~SharedPointer();
 
     T &operator*();
@@ -29,6 +31,14 @@ public:
 
     T get();
 
+    template<typename U>
+    SharedPointer<T> &operator=(const SharedPointer<U> &other);//assignment operator
+
+    template<typename U>
+    //friend class- to allow polymorphism
+    friend
+    class SharedPointer;
+
 private:
     T *rowPtr;
     ReferenceCounter *referenceCounter;
@@ -36,28 +46,42 @@ private:
 };
 
 template<typename T>
-inline SharedPointer<T>::SharedPointer(T *ptr):rowPtr(ptr),referenceCounter(new ReferenceCounter()) {
+inline SharedPointer<T>::SharedPointer(T *ptr):rowPtr(ptr), referenceCounter(new ReferenceCounter()) {
 
     if (rowPtr) {
         ++(*referenceCounter);
     }
-    std::cout<<"in ctor "<<*referenceCounter;
+    std::cout << "in ctor " << *referenceCounter;
 
 }
+
 // Copy constructor
 template<typename T>
-inline SharedPointer<T>::SharedPointer(SharedPointer<T>& sp):rowPtr(sp.rowPtr),referenceCounter(sp.referenceCounter){
+inline SharedPointer<T>::SharedPointer(SharedPointer<T> &sp):rowPtr(sp.rowPtr), referenceCounter(sp.referenceCounter) {
     ++(*referenceCounter);
-    std::cout<<"in copy ctor "<<*referenceCounter;
+    std::cout << "in copy ctor " << *referenceCounter;
+}
+
+
+template<typename T>
+template<typename U>
+SharedPointer<T> &SharedPointer<T>::operator=(const SharedPointer<U> &other) {
+    if (this != other) {
+        --(*referenceCounter);
+        rowPtr = other.rowPtr;
+        referenceCounter = other.referenceCounter;
+        ++(*referenceCounter);
+    }
+    return *other;
 }
 
 template<typename T>
 inline SharedPointer<T>::~SharedPointer() {
-    std::cout<<"in dtor referenceCounter "<<*referenceCounter<<std::endl;
+    std::cout << "in dtor referenceCounter " << *referenceCounter << std::endl;
     --(*referenceCounter);;
     if (referenceCounter->get_counter() == 0) {
         delete (rowPtr);
-        std::cout<<"delete SharedPtr  \n";
+        std::cout << "delete SharedPtr  \n";
     }
 
 
