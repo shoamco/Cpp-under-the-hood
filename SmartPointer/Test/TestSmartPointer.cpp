@@ -42,8 +42,26 @@ void testSmartPtrInScope(){
     std::cout<<"after set sharedPointer1 "<<sharedPointer1.get()<<std::endl;
 
 }
+void testAssignmentOperator(){
+    std::cout<<"\n\n\n**************  testAssignmentOperator *******\n";
+    SharedPointer<int> sharedPointer1(new int(5));
+    std::cout<<"sharedPointer1 "<<sharedPointer1.get()<<std::endl;
+    SharedPointer<int> sharedPointer2 = sharedPointer1;
+
+    std::cout << "sharedPointer2 " << sharedPointer2.get() << std::endl;
+    SharedPointer<int> sharedPointer3(new int(3));
+    std::cout << "sharedPointer3 " << sharedPointer3.get() << std::endl;
+    sharedPointer1 = sharedPointer3;
+    std::cout<<"\nsharedPointer1 after assignment operator "<<sharedPointer1.get()<<std::endl;
+
+
+
+
+
+}
 void testSmartPointer(){
      testControlBlock();
     testCtorSmartPtr();
     testSmartPtrInScope();
+    testAssignmentOperator();
 }
