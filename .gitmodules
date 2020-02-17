@@ -1,3 +1,6 @@
 [submodule "memory-allocator"]
 	path = memory-allocator
 	url = https://github.com/shoamco/memory-allocator.git
+[submodule "hashmap"]
+	path = hashmap
+	url = https://github.com/shoamco/hashmap.git
