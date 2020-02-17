@@ -1,0 +1,3 @@
+[submodule "memory-allocator"]
+	path = memory-allocator
+	url = https://github.com/shoamco/memory-allocator.git
