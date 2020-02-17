@@ -4,3 +4,6 @@
 [submodule "hashmap"]
 	path = hashmap
 	url = https://github.com/shoamco/hashmap.git
+[submodule "implementation-cpp-pre-processor-with-python-"]
+	path = implementation-cpp-pre-processor-with-python-
+	url = https://github.com/shoamco/implementation-cpp-pre-processor-with-python-.git
