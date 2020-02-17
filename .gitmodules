@@ -7,3 +7,6 @@
 [submodule "implementation-cpp-pre-processor-with-python-"]
 	path = implementation-cpp-pre-processor-with-python-
 	url = https://github.com/shoamco/implementation-cpp-pre-processor-with-python-.git
+[submodule "fixed-point"]
+	path = fixed-point
+	url = https://github.com/shoamco/fixed-point.git
