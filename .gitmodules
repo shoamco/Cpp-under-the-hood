@@ -10,3 +10,6 @@
 [submodule "fixed-point"]
 	path = fixed-point
 	url = https://github.com/shoamco/fixed-point.git
+[submodule "c-generic-vector"]
+	path = c-generic-vector
+	url = https://github.com/shoamco/c-generic-vector.git
