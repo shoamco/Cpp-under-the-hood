@@ -6,4 +6,5 @@
 - hashmap (c++).
 - memory-allocator (c++);
 - FixedPoint (c++).
+- thread safe singleton (c++)
 
