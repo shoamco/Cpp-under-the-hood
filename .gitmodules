@@ -13,3 +13,6 @@
 [submodule "c-generic-vector"]
 	path = c-generic-vector
 	url = https://github.com/shoamco/c-generic-vector.git
+[submodule "concurrency-thread-safe-singleton"]
+	path = concurrency-thread-safe-singleton
+	url = https://github.com/shoamco/concurrency-thread-safe-singleton.git
